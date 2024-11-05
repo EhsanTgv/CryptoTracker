@@ -16,7 +16,7 @@ class RemoteCoinDataSource(
     private val httpClient: HttpClient,
 ) : CoinDataSource {
 
-    override suspend fun getCoin(): Result<List<Coin>, NetworkError> {
+    override suspend fun getCoins(): Result<List<Coin>, NetworkError> {
         return safeCall<CoinsResponseDto> {
             httpClient.get(
                 urlString = constructUrl("/assets")
