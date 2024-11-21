@@ -31,36 +31,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             CryptoTrackerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val viewModel = koinViewModel<CoinListViewModel>()
-                    val state by viewModel.state.collectAsStateWithLifecycle()
-                    val context = LocalContext.current
-                    ObserveAsEvents(events = viewModel.event) { event ->
-                        when (event) {
-                            is CoinListEvent.Error -> {
-                                Toast.makeText(
-                                    context,
-                                    event.error.toString(context),
-                                    Toast.LENGTH_LONG,
-                                ).show()
-                            }
-                        }
-                    }
-                    when {
-                        state.selectedCoin != null -> {
-                            CoinDetailScreen(
-                                state = state,
-                                modifier = Modifier.padding(innerPadding)
-                            )
-                        }
-
-                        else -> {
-                            CoinListScreen(
-                                state = state,
-                                modifier = Modifier.padding(innerPadding),
-                                onAction = viewModel::onAction,
-                            )
-                        }
-                    }
+                    AdaptiveCoinListDetailPanel(
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
